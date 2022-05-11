@@ -9,8 +9,8 @@ using System.Windows.Forms;
 
 /*
  * Name/ID: Ellena Begg, 30040389
- * Date: 26 April 2022
- * Version 1.0 GUI Framework and Class
+ * Date: 11 May 2022
+ * Version 1.1 After Testing
  * Program Name: Data Structures Wiki 2
  * Description: C# Assessment Task 2
  *              A small Wiki for Data Structure types.
@@ -35,6 +35,9 @@ namespace DataStructuresWiki2
         static List<Information> Wiki = new List<Information>();
         // 6.4 Create a global String array with the six Categories
         static string[] categories;
+        static string testOutput = ""; // for testing output
+
+        //Trace.Listeners.Add(new TextWriterTraceListener(testOutput));
 
         #endregion
 
@@ -46,6 +49,7 @@ namespace DataStructuresWiki2
             if (Wiki.Count > 0)
             {
                 Wiki.Sort();
+                MessageBox.Show(Wiki[0].GetName());
                 listViewWiki.Items.Clear();
                 foreach (var information in Wiki)
                 {
@@ -129,13 +133,27 @@ namespace DataStructuresWiki2
         /// <returns>true when the new Name doesn't already exist, false if the new Name already exists.</returns>
         private bool IsValidName(string checkName)
         {
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.WriteLine("IsValidName called. checkName value: " + checkName);
+            testOutput += "IsValidName called. checkName value: " + checkName + "\n";
+            Trace.WriteLine("checkName value: " + checkName);
+            testOutput += "checkName value: " + checkName + "\n";
+
             if (Wiki.Exists(dup => dup.GetName() == checkName))
             {
+                Trace.WriteLine(checkName + " is a duplicate, so it's NOT VALID.");
+                testOutput += checkName + " is a duplicate, so it's NOT VALID.\n";
+
                 toolStripStatusLabel1.Text = "That name already exists.";
                 return false; //not valid, as already exists
             }
             else
+            {
+                Trace.WriteLine(checkName + " is VALID.");
+                testOutput += checkName + " is VALID.\n";
+
                 return true; //is valid, the same name doesn't already exist
+            }
         }
 
         // 6.4 Create and initialise a global string array with the six categories as indicated in the Data Structure Matrix.
@@ -197,7 +215,7 @@ namespace DataStructuresWiki2
         {
             textBoxName.Clear();
             textBoxDefinition.Clear();
-            comboBoxCategory.SelectedIndex = 0;
+            comboBoxCategory.SelectedIndex = -1;
             radioButtonLinear.Checked = false;
             radioButtonNonLinear.Checked = false;
             listViewWiki.SelectedItems.Clear(); // make sure no item selected in ListView
@@ -314,6 +332,25 @@ namespace DataStructuresWiki2
             }
         }
 
+        private void SaveOutputFile()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Application.StartupPath;
+
+            try
+            {
+                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Application.StartupPath, "TestOutputData.txt")))
+                {
+                    
+                    streamWriter.WriteLine(testOutput);
+                }
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show("SaveOutputFile exc: " + exc.Message);
+            }
+        }
+
         #endregion
 
         #region ButtonClickEvents
@@ -356,7 +393,11 @@ namespace DataStructuresWiki2
         // Display an updated version of the sorted list at the end of this process.
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if(AllValuesPresent())
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.WriteLine("Edit Click: ");
+            testOutput += "Edit Click: \n";
+
+            if (AllValuesPresent())
             {
                 // confirm Edit with dialog
                 DialogResult dr = MessageBox.Show("Do you want to Edit this Data Structure?",
@@ -366,24 +407,39 @@ namespace DataStructuresWiki2
                     if (IsValidName(textBoxName.Text))
                     {
                         int currentRecord = listViewWiki.SelectedIndices[0];
+
+                        Trace.WriteLine("Edit. Old Values: " + Wiki[currentRecord].GetName() + ", " + Wiki[currentRecord].GetCategory() + ", " + Wiki[currentRecord].GetStructure() + ", " + Wiki[currentRecord].GetDefinition());
+                        testOutput += "Edit. Old Values: " + Wiki[currentRecord].GetName() + ", " + Wiki[currentRecord].GetCategory() + ", " + Wiki[currentRecord].GetStructure() + ", " + Wiki[currentRecord].GetDefinition() + "\n";
+
                         Wiki[currentRecord].SetName(textBoxName.Text);
                         Wiki[currentRecord].SetDefintion(textBoxDefinition.Text);
                         Wiki[currentRecord].SetCategory(comboBoxCategory.Text);
                         Wiki[currentRecord].SetStructure(SetStructureForNew());
+
+                        Trace.WriteLine("Edit. New Values: " + Wiki[currentRecord].GetName() + ", " + Wiki[currentRecord].GetCategory() + ", " + Wiki[currentRecord].GetStructure() + ", " + Wiki[currentRecord].GetDefinition());
+                        testOutput += "Edit. New Values: " + Wiki[currentRecord].GetName() + ", " + Wiki[currentRecord].GetCategory() + ", " + Wiki[currentRecord].GetStructure() + ", " + Wiki[currentRecord].GetDefinition() + "\n";
 
                         DisplayWiki();
                         toolStripStatusLabel1.Text = "Item successfully edited.";
                     }
                     else
                     {
+                        Trace.WriteLine("Edit. Invalid Name detected:" + textBoxName.Text);
+                        testOutput += "Edit. Invalid Name detected:" + textBoxName.Text + "\n";
+
                         return; // when there is a duplicate. No duplicates permitted.
                     }
                 } 
                 else
                 {
+                    Trace.WriteLine("Edit. Cancelled");
+                    testOutput += "Edit. Cancelled\n";
+
                     toolStripStatusLabel1.Text = "Edit cancelled.";
                 }
             }
+            Trace.WriteLine("Edit. AllValuesPresent method returned FALSE. Something is missing.");
+            testOutput += "Edit. AllValuesPresent method returned FALSE. Something is missing.\n";
         }
 
         // 6.7 Create a button method that will delete the currently selected record in the ListView.
@@ -391,6 +447,10 @@ namespace DataStructuresWiki2
         // Display an updated version of the sorted list at the end of this process.
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.WriteLine("Delete Click: ");
+            testOutput += "Delete Click: \n";
+
             if (listViewWiki.SelectedItems.Count > 0)
             {
                 // confirm Delete with dialog
@@ -402,15 +462,33 @@ namespace DataStructuresWiki2
 
                     string oldName = Wiki[index].GetName();
 
+                    Trace.WriteLine("Delete. Number of Objects in List: " + Wiki.Count.ToString());
+                    testOutput += "Delete. Number of Objects in List: " + Wiki.Count.ToString() + "\n";
+                    Trace.WriteLine("Delete. " + oldName + " about to be deleted.");
+                    testOutput += "Delete. " + oldName + " about to be deleted.\n";
+
                     Wiki.RemoveAt(index);
+
+                    Trace.WriteLine("Delete. Number of Objects in List: " + Wiki.Count.ToString());
+                    testOutput += "Delete. Number of Objects in List: " + Wiki.Count.ToString() + "\n";
 
                     DisplayWiki();
 
                     toolStripStatusLabel1.Text = oldName + " successfully deleted.";
                 }
+                else
+                {
+                    Trace.WriteLine("Delete. Cancelled");
+                    testOutput += "Delete. Cancelled\n";
+
+                    toolStripStatusLabel1.Text = "Delete cancelled.";
+                }
             }
             else
             {
+                Trace.WriteLine("Delete. No D.S. selected in ListView.");
+                testOutput += "Delete. No D.S. selected in ListView.\n";
+
                 toolStripStatusLabel1.Text = "NOTE: No Data Structure selected to Delete. Select a Data Structure first.";
                 return;
             }
@@ -475,7 +553,7 @@ namespace DataStructuresWiki2
                 information.SetName(textBoxSearch.Text);
                 int found = Wiki.BinarySearch(information); //use the builtin binary search to find a Data Structure name
 
-                if (found > 0)
+                if (found >= 0)
                 {
                     listViewWiki.SelectedItems.Clear();
                     listViewWiki.Items[found].Selected = true; //highlight the name in the ListView
@@ -508,6 +586,9 @@ namespace DataStructuresWiki2
         private void WikiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveBinaryFile("Wiki.bin");
+
+            //Testing
+            SaveOutputFile();
         }
 
         // 6.13 Create a double click event on the Name TextBox to clear the TextBboxes, ComboBox and Radio button.
@@ -534,14 +615,14 @@ namespace DataStructuresWiki2
             ReadCategoriesFromFile();
             FillComboBoxCategories();
 
-            string filename = Path.Combine(Application.StartupPath, "Wiki.bin");
-            if (File.Exists(filename))
-                OpenBinaryFile(filename);
-            else
-            {
+            //string filename = Path.Combine(Application.StartupPath, "Wiki.bin");
+            //if (File.Exists(filename))
+            //    OpenBinaryFile(filename);
+            //else
+            //{
                 CreateOriginalWiki();
                 DisplayWiki();
-            }
+            //}
         }
 
         private void CreateOriginalWiki()
