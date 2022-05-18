@@ -76,7 +76,7 @@
             this.label2.ForeColor = System.Drawing.Color.DarkCyan;
             this.label2.Location = new System.Drawing.Point(34, 99);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 16);
+            this.label2.Size = new System.Drawing.Size(48, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "Name:";
             // 
@@ -95,7 +95,7 @@
             this.label3.ForeColor = System.Drawing.Color.DarkCyan;
             this.label3.Location = new System.Drawing.Point(31, 144);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
+            this.label3.Size = new System.Drawing.Size(73, 16);
             this.label3.TabIndex = 0;
             this.label3.Text = "Category:";
             // 
@@ -125,7 +125,7 @@
             this.radioButtonNonLinear.AutoSize = true;
             this.radioButtonNonLinear.Location = new System.Drawing.Point(110, 22);
             this.radioButtonNonLinear.Name = "radioButtonNonLinear";
-            this.radioButtonNonLinear.Size = new System.Drawing.Size(95, 20);
+            this.radioButtonNonLinear.Size = new System.Drawing.Size(96, 20);
             this.radioButtonNonLinear.TabIndex = 4;
             this.radioButtonNonLinear.TabStop = true;
             this.radioButtonNonLinear.Text = "Non-Linear";
@@ -136,7 +136,7 @@
             this.radioButtonLinear.AutoSize = true;
             this.radioButtonLinear.Location = new System.Drawing.Point(6, 22);
             this.radioButtonLinear.Name = "radioButtonLinear";
-            this.radioButtonLinear.Size = new System.Drawing.Size(65, 20);
+            this.radioButtonLinear.Size = new System.Drawing.Size(66, 20);
             this.radioButtonLinear.TabIndex = 3;
             this.radioButtonLinear.TabStop = true;
             this.radioButtonLinear.Text = "Linear";
@@ -149,7 +149,7 @@
             this.label4.ForeColor = System.Drawing.Color.DarkCyan;
             this.label4.Location = new System.Drawing.Point(34, 251);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 16);
+            this.label4.Size = new System.Drawing.Size(74, 16);
             this.label4.TabIndex = 0;
             this.label4.Text = "Definition:";
             // 
@@ -207,7 +207,7 @@
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(205, 23);
             this.textBoxSearch.TabIndex = 12;
-            this.toolTip1.SetToolTip(this.textBoxSearch, "Enter Data Structure NAME to search for here.");
+            this.toolTip1.SetToolTip(this.textBoxSearch, "Enter Data Structure NAME to search for here. NOTE: Case Sensitive");
             // 
             // buttonAdd
             // 
@@ -299,7 +299,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 527);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 516);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(586, 22);
             this.statusStrip1.TabIndex = 18;
@@ -315,7 +315,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightCyan;
-            this.ClientSize = new System.Drawing.Size(586, 549);
+            this.ClientSize = new System.Drawing.Size(586, 538);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.buttonSave);

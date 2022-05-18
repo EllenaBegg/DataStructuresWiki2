@@ -2,8 +2,8 @@
 
 /*
  * Name/ID: Ellena Begg, 30040389
- * Date: 26 April 2022
- * Version 1.0 GUI Framework and Class
+ * Date: 18 May 2022
+ * Version 1.2 After Further Thourough Testing
  * Program Name: Data Structures Wiki 2
  * Description: C# Assessment Task 2
  *              A Class for Data Structure types, that implements IComparable<T>
@@ -69,7 +69,20 @@ namespace DataStructuresWiki2
         // Must overload IComparable.CompareTo method
         public int CompareTo(Information other)
         {
+            //TESTING
+            //testData += "\nIncoming object NAME value: " + other.GetName();
+            //testData += "\nCompared to object NAME Value: " + this.name;
+
             return this.name.CompareTo(other.name);
         }
+
+        #region TESTING
+        //protected static string testData = "Information Class CompareTo method Data\n\n";
+
+        //public static string GetTestData()
+        //{
+        //    return testData;
+        //}
+        #endregion
     } // end class Information
 } // end namespace DataStructuresWiki2
