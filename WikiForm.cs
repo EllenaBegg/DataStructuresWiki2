@@ -9,8 +9,8 @@ using System.Windows.Forms;
 
 /*
  * Name/ID: Ellena Begg, 30040389
- * Date: 18 May 2022
- * Version 1.2 After Further Thourough Testing
+ * Date: 1 June 2022
+ * Version 1.2 Final
  * Program Name: Data Structures Wiki 2
  * Description: C# Assessment Task 2
  *              A small Wiki for Data Structure types.
@@ -42,6 +42,9 @@ namespace DataStructuresWiki2
         #region Utilities
 
         // 6.9 Create a single custom method that will sort and then display the Name and Category from the Wiki information in the list.
+        /// <summary>
+        /// Display all items in the Wiki to the screen.
+        /// </summary>
         private void DisplayWiki()
         {
             if (Wiki.Count > 0)
